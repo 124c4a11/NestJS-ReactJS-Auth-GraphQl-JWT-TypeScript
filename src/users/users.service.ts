@@ -18,6 +18,6 @@ export class UsersService {
   }
 
   async findOne(name: string) {
-    return await this.userRepo.findOneByOrFail({ name });
+    return await this.userRepo.findOneBy({ name });
   }
 }
