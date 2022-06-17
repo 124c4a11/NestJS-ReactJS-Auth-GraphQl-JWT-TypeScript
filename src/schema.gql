@@ -7,8 +7,19 @@ input CreateUserInput {
   password: String!
 }
 
+type LoginResponse {
+  access_token: String!
+  user: User!
+}
+
+input LoginUserInput {
+  name: String!
+  password: String!
+}
+
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
 }
 
 type Query {
@@ -19,4 +30,5 @@ type Query {
 type User {
   id: Int!
   name: String!
+  password: String
 }

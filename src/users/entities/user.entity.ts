@@ -13,5 +13,6 @@ export class User {
   name: string;
 
   @Column()
-  password: string;
+  @Field({ nullable: true })
+  password?: string;
 }
