@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
+import { useSignupMutation } from '../../graphql/generated';
 
 export function SignUpModal(): JSX.Element {
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  function onSubmit() {}
+  const [signup] = useSignupMutation({
+    variables: { name, password },
+  });
+
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    signup();
+  }
 
   return (
     <>

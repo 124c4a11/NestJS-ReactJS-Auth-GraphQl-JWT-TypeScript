@@ -1,9 +1,13 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/auth.context';
 import { LoginModal } from '../LoginModal/LoginModal';
 import { Logout } from '../Logout/Logout';
 import { SignUpModal } from '../SignUpModal/SignUpModal';
 
 export function Navbar(): JSX.Element {
+  const { user } = useContext(AuthContext);
+
   return (
     <nav className="navbar navbar-expand-lg bg-light mb-4">
       <div className="container">
@@ -32,9 +36,14 @@ export function Navbar(): JSX.Element {
             </li>
           </ul>
           <div className="d-flex gap-2">
-            <SignUpModal />
-            <LoginModal />
-            <Logout />
+            {user ? (
+              <Logout />
+            ) : (
+              <>
+                <SignUpModal />
+                <LoginModal />
+              </>
+            )}
           </div>
         </div>
       </div>

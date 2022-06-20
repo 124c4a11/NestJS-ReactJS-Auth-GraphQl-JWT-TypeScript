@@ -1,10 +1,11 @@
 schema: http://localhost:3001/graphql
 documents: './src/**/*.{ts,tsx}'
 generates:
-  graphql/generated.ts:
+  src/graphql/generated.ts:
     plugins:
       - typescript
       - typescript-operations
       - typescript-react-apollo
     config:
       withHooks: true
+watch: true

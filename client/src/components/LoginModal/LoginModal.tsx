@@ -1,10 +1,31 @@
-import { useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
+import { AuthContext } from '../../context/auth.context';
+import { useLoginMutation } from '../../graphql/generated';
+import { GET_USERS } from '../../graphql/user.queries';
 
 export function LoginModal(): JSX.Element {
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  function onSubmit() {}
+  const context = useContext(AuthContext);
+
+  const [login] = useLoginMutation({
+    variables: { name, password },
+
+    update(cache, { data }) {
+      const userData = data!.login;
+
+      context.login(userData);
+    },
+
+    refetchQueries: [{ query: GET_USERS }],
+  });
+
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    login();
+  }
 
   return (
     <>

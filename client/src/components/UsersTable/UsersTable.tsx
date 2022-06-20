@@ -1,4 +1,11 @@
+import { useGetUsersQuery } from '../../graphql/generated';
+
 export function UsersTable(): JSX.Element {
+  const { loading, error, data } = useGetUsersQuery();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error.message}</p>;
+
   return (
     <div className="table-responsive">
       <table className="table">
@@ -9,10 +16,16 @@ export function UsersTable(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>John</td>
-          </tr>
+          {data?.users.length ? (
+            <>
+              {data.users.map(({ id, name }) => (
+                <tr key={id}>
+                  <th scope="row">{id}</th>
+                  <td>{name}</td>
+                </tr>
+              ))}
+            </>
+          ) : null}
         </tbody>
       </table>
     </div>
